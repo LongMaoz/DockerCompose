@@ -11,7 +11,7 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: bsjj9527
+      MYSQL_ROOT_PASSWORD: you_password
     volumes:
       - /home/master/dockercompose/mysql/data:/var/lib/mysql
       - /home/master/dockercompose/mysql/conf:/etc/mysql/conf.d
@@ -26,9 +26,28 @@ services:
     ports:
       - 3307:3307
     environment:
-      MYSQL_ROOT_PASSWORD: bsjj9527
+      MYSQL_ROOT_PASSWORD: you_password
     volumes:
       - /home/master/dockercompose/mysql2/data:/var/lib/mysql
       - /home/master/dockercompose/mysql2/conf:/etc/mysql/conf.d
 networks:
   mysql: 
+
+#设置只读配置  不只读失效
+#chmod a+r my.cnf
+#进入主MySQL服务器
+#docker exec -it mysql_master mysql -uroot -p
+#FLUSH PRIVILEGES;  刷新权限
+#SHOW MASTER STATUS; 查看Log
+#进入从服务器
+#docker exec -it mysql_slave mysql -uroot -p
+#创建帐号设置权限
+#CREATE USER 'sync_user'@'%' IDENTIFIED WITH mysql_native_password BY 'you_password';
+#GRANT REPLICATION SLAVE ON *.* TO 'sync_user'@'%';
+#从服务器开启复制
+#STOP SLAVE;
+#START SLAVE;
+#设置复制参数
+#CHANGE MASTER TO MASTER_HOST='172.22.0.3', Master_Port=3306, MASTER_USER='sync_user', MASTER_PASSWORD='you_passwprd', MASTER_LOG_FILE='you_logfile', MASTER_LOG_POS=you_pos;
+#查看复制状态
+#SHOW SLAVE STATUS \G
