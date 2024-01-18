@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+  mysql_master:
+    image: mysql
+    networks:
+      - mysql
+    container_name: mysql_master
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: bsjj9527
+    volumes:
+      - /home/master/dockercompose/mysql/data:/var/lib/mysql
+      - /home/master/dockercompose/mysql/conf:/etc/mysql/conf.d
+      
+  mysql_slave:
+    image: mysql
+    networks:
+      - mysql
+    container_name: mysql_slave
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3307:3307
+    environment:
+      MYSQL_ROOT_PASSWORD: bsjj9527
+    volumes:
+      - /home/master/dockercompose/mysql2/data:/var/lib/mysql
+      - /home/master/dockercompose/mysql2/conf:/etc/mysql/conf.d
+networks:
+  mysql: 
