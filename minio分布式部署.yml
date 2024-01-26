@@ -1,0 +1,42 @@
+version: '2'
+services:
+  minio1:
+    image: 'bitnami/minio:latest'
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=youpassword
+      - MINIO_DISTRIBUTED_MODE_ENABLED=yes
+      - MINIO_DISTRIBUTED_NODES=minio1,minio2,minio3,minio4
+      - MINIO_SKIP_CLIENT=yes
+    volumes:
+      - /home/master/dockercompose/miniodis/node1/data:/bitnami/minio/data
+  minio2:
+    image: 'bitnami/minio:latest'
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=youpassword
+      - MINIO_DISTRIBUTED_MODE_ENABLED=yes
+      - MINIO_DISTRIBUTED_NODES=minio1,minio2,minio3,minio4
+      - MINIO_SKIP_CLIENT=yes
+    volumes:
+      - /home/master/dockercompose/miniodis/node2/data:/bitnami/minio/data
+  minio3:
+    image: 'bitnami/minio:latest'
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=youpassword
+      - MINIO_DISTRIBUTED_MODE_ENABLED=yes
+      - MINIO_DISTRIBUTED_NODES=minio1,minio2,minio3,minio4
+      - MINIO_SKIP_CLIENT=yes
+    volumes:
+      - /home/master/dockercompose/miniodis/node3/data:/bitnami/minio/data
+  minio4:
+    image: 'bitnami/minio:latest'
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=youpassword
+      - MINIO_DISTRIBUTED_MODE_ENABLED=yes
+      - MINIO_DISTRIBUTED_NODES=minio1,minio2,minio3,minio4
+      - MINIO_SKIP_CLIENT=yes
+    volumes:
+      - /home/master/dockercompose/miniodis/node4/data:/bitnami/minio/data
