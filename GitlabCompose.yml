@@ -1,0 +1,19 @@
+version: '3.6'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    hostname: '192.168.3.8'  # 如果是本地访问，可以设置为 localhost
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://192.168.3.8'  # 将地址改为 http 协议
+        # Add any other gitlab.rb configuration here, each on its own line
+    ports:
+      - '80:80'  # 只保留 HTTP 端口映射
+      - '22:22'  # SSH 端口，如果需要的话
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'
